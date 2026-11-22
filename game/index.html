@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ember Pact — a card duel</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- ======= TITLE SCREEN ======= -->
+  <section id="screen-title" class="screen">
+    <div class="title-frame">
+      <div class="title-embers" aria-hidden="true"><span>▲</span><span>●</span><span>◆</span><span>■</span></div>
+      <h1 class="game-title">EMBER PACT</h1>
+      <p class="tagline">Three duels. Four elements. One pact to keep.</p>
+      <div class="duel-list" id="duel-list"></div>
+      <button id="btn-begin" class="big-btn">Begin the First Duel</button>
+      <div class="howto">
+        <h2>How a duel works</h2>
+        <ul>
+          <li><b>Play cards</b> by clicking them. Each card costs embers — you gain <b>3 embers</b> every turn.</li>
+          <li><b>Resonance:</b> play two cards of the same element in one turn and the second hits <b>+2</b> harder.</li>
+          <li><b>Trine:</b> play three different elements in one turn to <b>draw a card</b>.</li>
+          <li>Read the enemy's <b>intent</b> above the table, then answer it: guard against a strike, strike through a guard.</li>
+          <li>Reduce the enemy to <b>0 life</b> to win the duel. Fall to 0 and the pact breaks.</li>
+        </ul>
+      </div>
+      <p class="foot">An original game. No network, no account, just cards.</p>
+    </div>
+  </section>
+
+  <!-- ======= DUEL TABLE ======= -->
+  <section id="screen-duel" class="screen hidden">
+    <header id="hud">
+      <div class="hud-left">
+        <span id="hud-duel-name">Duel I</span>
+        <span id="hud-turn">Turn 1</span>
+      </div>
+      <div class="hud-mid">
+        <span id="hud-score">Score 0</span>
+        <span id="hud-deck">Deck 0</span>
+        <span id="hud-discard">Discard 0</span>
+      </div>
+      <div class="hud-right">
+        <button id="btn-mute" class="small-btn" title="Sound on/off">Sound: On</button>
+        <button id="btn-quit" class="small-btn" title="Back to title">Quit</button>
+      </div>
+    </header>
+
+    <div id="table">
+      <!-- Opponent -->
+      <div id="enemy-side">
+        <div id="enemy-hand" class="mini-hand" aria-label="Opponent hand"></div>
+        <div id="enemy-card">
+          <div id="enemy-portrait" class="portrait">▲</div>
+          <div class="fighter-info">
+            <div id="enemy-name" class="fighter-name">Cinder Pup</div>
+            <div class="life-row">
+              <div class="life-bar"><div id="enemy-life-fill" class="life-fill"></div></div>
+              <span id="enemy-life-text" class="life-text">24 / 24</span>
+              <span id="enemy-guard" class="guard-badge hidden">Guard 0</span>
+            </div>
+            <div id="enemy-intent" class="intent">plans to strike</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Middle: played cards + log -->
+      <div id="mid-row">
+        <div id="played-zone" aria-label="Cards played this turn"></div>
+        <div id="log" aria-label="Duel log"></div>
+      </div>
+
+      <!-- Player -->
+      <div id="player-side">
+        <div id="player-card">
+          <div class="portrait player-portrait">✦</div>
+          <div class="fighter-info">
+            <div class="fighter-name">You — the Pactkeeper</div>
+            <div class="life-row">
+              <div class="life-bar"><div id="player-life-fill" class="life-fill player-fill"></div></div>
+              <span id="player-life-text" class="life-text">30 / 30</span>
+              <span id="player-guard" class="guard-badge hidden">Guard 0</span>
+            </div>
+            <div id="ember-row">
+              <span class="ember-label">Embers</span>
+              <span id="ember-pips" class="ember-pips"></span>
+              <span id="ember-text" class="ember-text">3</span>
+            </div>
+          </div>
+          <button id="btn-end-turn" class="big-btn end-btn">End Turn</button>
+        </div>
+        <div id="player-hand" class="hand" aria-label="Your hand"></div>
+        <div id="hand-hint">Click a card to play it · same element twice = Resonance +2 · three elements = Trine draw</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======= WIN SCREEN ======= -->
+  <section id="screen-win" class="screen hidden">
+    <div class="end-frame win-frame">
+      <div class="end-glyph">✦</div>
+      <h1 class="end-title">THE PACT IS YOURS</h1>
+      <p id="win-text" class="end-text">All three duels are won. The embers bow to you.</p>
+      <div id="win-stats" class="end-stats"></div>
+      <button id="btn-again-win" class="big-btn">Duel Again</button>
+      <button id="btn-title-win" class="small-btn">Back to Title</button>
+    </div>
+  </section>
+
+  <!-- ======= LOSS SCREEN ======= -->
+  <section id="screen-loss" class="screen hidden">
+    <div class="end-frame loss-frame">
+      <div class="end-glyph">🕯</div>
+      <h1 class="end-title">THE EMBERS FADE</h1>
+      <p id="loss-text" class="end-text">Your life is spent. The pact breaks — for now.</p>
+      <div id="loss-stats" class="end-stats"></div>
+      <button id="btn-retry" class="big-btn">Try the Duel Again</button>
+      <button id="btn-title-loss" class="small-btn">Back to Title</button>
+    </div>
+  </section>
+
+</div>
+<script type="module" src="src/main.js"></script>
+</body>
+</html>
